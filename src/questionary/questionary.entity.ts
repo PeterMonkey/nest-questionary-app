@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinColumn,
+} from 'typeorm';
+import { Question } from './question.entity';
 
 @Entity()
 export class Questionary {
@@ -8,6 +15,9 @@ export class Questionary {
   @Column()
   title: string;
 
-  @Column()
-  questions: string[];
+  @OneToMany(() => Question, (question) => question.questionary, {
+    eager: true,
+  })
+  @JoinColumn()
+  questions: Question[];
 }
