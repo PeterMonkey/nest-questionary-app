@@ -17,6 +17,7 @@ export class Questionary {
 
   @OneToMany(() => Question, (question) => question.questionary, {
     eager: true,
+    onDelete: 'CASCADE',
   })
   @JoinColumn()
   questions: Question[];
