@@ -12,10 +12,23 @@ export class QuestionaryService {
   ) {}
 
   async create(quest: CreateQuestionaryDTO): Promise<Questionary> {
-    const questionary = this.questionaryRepository.create({
-      title: quest.title,
-    });
-    await this.questionaryRepository.save(questionary);
-    return questionary;
+    try {
+      const questionary = this.questionaryRepository.create({
+        title: quest.title,
+      });
+      await this.questionaryRepository.save(questionary);
+      return questionary;
+    } catch (error) {
+      throw new Error('Bad request');
+    }
+  }
+
+  async getQuestionary(): Promise<Questionary[]> {
+    try {
+      const quest = this.questionaryRepository.find();
+      return quest;
+    } catch (error) {
+      throw new Error('Bad request');
+    }
   }
 }

@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Questionary } from 'src/questionary/questionary.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -13,4 +21,11 @@ export class User {
 
   @Column()
   password: string;
+
+  @OneToMany(() => Questionary, (q) => q.users, { eager: true })
+  questionary_created: Questionary[];
+
+  @ManyToMany(() => Questionary, (q) => q.users, { eager: true })
+  @JoinColumn()
+  questionary_finished: Questionary[];
 }
